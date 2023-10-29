@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.AssetsHelper;
-
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
@@ -17,7 +15,6 @@ public abstract class GameObject {
     protected final Texture sprite;
     protected final Sound actionSound;
     protected final Body body;
-    private Rectangle drawBounds;
 
     protected GameObject(Rectangle bounds, World world, String spritePath, String soundPath) {
         actualBounds = bounds;
@@ -26,8 +23,6 @@ public abstract class GameObject {
         actionSound = AssetsHelper.loadSound(soundPath);
 
         body = createBody();
-
-        drawBounds = getDrawBounds();
     }
 
     protected abstract Body createBody();
@@ -44,8 +39,7 @@ public abstract class GameObject {
 
     public void draw(Batch batch) {
 
-        if(body.getType() == BodyDef.BodyType.DynamicBody)
-            drawBounds = getDrawBounds();
+        Rectangle drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
