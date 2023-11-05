@@ -1,13 +1,17 @@
 package knight.arkham.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Space;
 import knight.arkham.helpers.GameContactListener;
@@ -22,9 +26,9 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
     private final Texture background;
+    private final Texture floor;
     private final Player player;
-    private final Pipe downPipe;
-    private final Pipe upPipe;
+    private final Array<Pipe> pipes;
     private float accumulator;
     private final float TIME_STEP;
 
@@ -45,9 +49,9 @@ public class GameScreen extends ScreenAdapter {
         debugRenderer = new Box2DDebugRenderer();
 
         player = new Player(new Vector2(game.screenWidth/2f, game.screenHeight/2f), world);
-        upPipe = new Pipe(new Rectangle(game.screenWidth, game.screenHeight,64, 256), true, world);
-        downPipe = new Pipe(new Rectangle(game.screenWidth, 80, 64, 256), false, world);
         background = new Texture("images/background-day.png");
+        floor = new Texture("images/base.png");
+        pipes = new Array<>();
     }
 
     @Override
@@ -58,8 +62,9 @@ public class GameScreen extends ScreenAdapter {
     private void update() {
 
         player.update();
-        downPipe.update();
-        upPipe.update();
+
+        for (Pipe pipe : pipes)
+            pipe.update();
     }
 
     private void doPhysicsTimeStep(float deltaTime) {
@@ -83,6 +88,20 @@ public class GameScreen extends ScreenAdapter {
         draw();
 
         doPhysicsTimeStep(deltaTime);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
+            generatePipes();
+    }
+
+    private void generatePipes() {
+
+        float upPipeHeight = MathUtils.random(256, game.screenHeight - 32);
+//        float downPipeHeight = MathUtils.random(80, upPipeHeight - 32);
+
+        Pipe upPipe = new Pipe(new Rectangle(game.screenWidth, game.screenHeight,64, upPipeHeight), true, world);
+        Pipe downPipe = new Pipe(new Rectangle(game.screenWidth, 80, 64, upPipeHeight), false, world);
+
+        pipes.add(upPipe, downPipe);
     }
 
     private void draw() {
@@ -97,9 +116,16 @@ public class GameScreen extends ScreenAdapter {
             game.screenHeight / PIXELS_PER_METER
         );
 
+        for (Pipe pipe : pipes)
+            pipe.draw(batch);
+
+        batch.draw(
+            floor, 1 / PIXELS_PER_METER, 1 / PIXELS_PER_METER,
+            game.screenWidth / PIXELS_PER_METER,
+            80 / PIXELS_PER_METER
+        );
+
         player.draw(batch);
-        downPipe.draw(batch);
-        upPipe.draw(batch);
 
         batch.end();
 
