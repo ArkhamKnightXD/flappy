@@ -12,8 +12,12 @@ import knight.arkham.helpers.Box2DHelper;
 public class Player extends GameObject {
     public static int score;
 
-    public Player(Rectangle bounds, World world) {
-        super(bounds, world, "structure.png", "laser.wav");
+    public Player(Vector2 position, World world) {
+        super(
+            new Rectangle(position.x, position.y, 50, 40),
+            world, "yellowbird-midflap.png", "laser.wav"
+        );
+
         score = 0;
     }
 
@@ -27,7 +31,7 @@ public class Player extends GameObject {
     public void update() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-            applyLinealImpulse(new Vector2(0, 10));
+            applyLinealImpulse(new Vector2(0, 20));
     }
 
     private void applyLinealImpulse(Vector2 impulseDirection) {

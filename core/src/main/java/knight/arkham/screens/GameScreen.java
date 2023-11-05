@@ -2,6 +2,7 @@ package knight.arkham.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -12,13 +13,18 @@ import knight.arkham.Space;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.*;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public class GameScreen extends ScreenAdapter {
     private final Space game;
     private final OrthographicCamera camera;
     public SpriteBatch batch;
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
+    private final Texture background;
     private final Player player;
+    private final Pipe downPipe;
+    private final Pipe upPipe;
     private float accumulator;
     private final float TIME_STEP;
 
@@ -38,7 +44,10 @@ public class GameScreen extends ScreenAdapter {
 
         debugRenderer = new Box2DDebugRenderer();
 
-        player = new Player(new Rectangle(game.screenWidth/2f, game.screenHeight/2f , 32, 32), world);
+        player = new Player(new Vector2(game.screenWidth/2f, game.screenHeight/2f), world);
+        upPipe = new Pipe(new Rectangle(game.screenWidth, game.screenHeight,64, 256), true, world);
+        downPipe = new Pipe(new Rectangle(game.screenWidth, 80, 64, 256), false, world);
+        background = new Texture("images/background-day.png");
     }
 
     @Override
@@ -49,6 +58,8 @@ public class GameScreen extends ScreenAdapter {
     private void update() {
 
         player.update();
+        downPipe.update();
+        upPipe.update();
     }
 
     private void doPhysicsTimeStep(float deltaTime) {
@@ -80,7 +91,15 @@ public class GameScreen extends ScreenAdapter {
 
         batch.begin();
 
+        batch.draw(
+            background, 1 / PIXELS_PER_METER, 1 / PIXELS_PER_METER,
+            game.screenWidth / PIXELS_PER_METER,
+            game.screenHeight / PIXELS_PER_METER
+        );
+
         player.draw(batch);
+        downPipe.draw(batch);
+        upPipe.draw(batch);
 
         batch.end();
 

@@ -12,7 +12,7 @@ import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 public abstract class GameObject {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
-    protected final Texture sprite;
+    private final Texture sprite;
     protected final Sound actionSound;
     protected final Body body;
 
@@ -42,6 +42,10 @@ public abstract class GameObject {
         Rectangle drawBounds = getDrawBounds();
 
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+    }
+
+    public Rectangle getBounds() {
+        return actualBounds;
     }
 
     public void dispose() {
