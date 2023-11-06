@@ -34,6 +34,7 @@ public class GameScreen extends ScreenAdapter {
     private final Floor floor;
     private final TextureAtlas atlas;
     private TextureRegion region;
+    private TextureRegion region2;
     private int score;
     private long lastPipeSpawnTime;
     private float accumulator;
@@ -102,11 +103,17 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && score < 9) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 
             score++;
 
-            region = atlas.findRegion(String.valueOf(score));
+            if (score < 10)
+                region = atlas.findRegion(String.valueOf(score));
+
+            else {
+                region = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(0, 1))));
+                region2 = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(1, 2))));
+            }
         }
     }
 
@@ -155,6 +162,13 @@ public class GameScreen extends ScreenAdapter {
             region, game.screenWidth / 2f / PIXELS_PER_METER, 500 / PIXELS_PER_METER,
             region.getRegionWidth() / PIXELS_PER_METER, region.getRegionHeight() / PIXELS_PER_METER
         );
+
+        if (score > 9) {
+            batch.draw(
+                region2, game.screenWidth + 15 / 2f / PIXELS_PER_METER, 500 / PIXELS_PER_METER,
+                region2.getRegionWidth() / PIXELS_PER_METER, region2.getRegionHeight() / PIXELS_PER_METER
+            );
+        }
 
         batch.end();
 
