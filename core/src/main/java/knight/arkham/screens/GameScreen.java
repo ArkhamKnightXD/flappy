@@ -20,7 +20,7 @@ import knight.arkham.Space;
 import knight.arkham.helpers.GameContactListener;
 import knight.arkham.objects.*;
 import java.util.Iterator;
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+import static knight.arkham.helpers.Constants.*;
 
 public class GameScreen extends ScreenAdapter {
     private final Space game;
@@ -33,8 +33,9 @@ public class GameScreen extends ScreenAdapter {
     private final Array<Pipe> pipes;
     private final Floor floor;
     private final TextureAtlas atlas;
-    private TextureRegion region;
-    private TextureRegion region2;
+    private TextureRegion scoreNumbers;
+    private TextureRegion scoreNumbersUnits;
+    private final Rectangle scoreBounds;
     private int score;
     private long lastPipeSpawnTime;
     private float accumulator;
@@ -59,11 +60,20 @@ public class GameScreen extends ScreenAdapter {
 
         pipes = new Array<>();
 
-        background = new Texture("images/background-day.png");
         floor = new Floor(new Rectangle(game.screenWidth/2f, 40, game.screenWidth, 80), world);
+
+        background = new Texture("images/background-day.png");
+
         atlas = new TextureAtlas("images/numbers.atlas");
 
-        region = atlas.findRegion(String.valueOf(score));
+        scoreNumbers = atlas.findRegion(String.valueOf(score));
+        scoreNumbersUnits = atlas.findRegion(String.valueOf(score));
+
+        scoreBounds = new Rectangle(
+            FULL_SCREEN_WIDTH / 2f, 500 / PIXELS_PER_METER,
+            scoreNumbers.getRegionWidth() / PIXELS_PER_METER,
+            scoreNumbers.getRegionHeight() / PIXELS_PER_METER
+        );
     }
 
     @Override
@@ -108,11 +118,11 @@ public class GameScreen extends ScreenAdapter {
             score++;
 
             if (score < 10)
-                region = atlas.findRegion(String.valueOf(score));
+                scoreNumbers = atlas.findRegion(String.valueOf(score));
 
             else {
-                region = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(0, 1))));
-                region2 = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(1, 2))));
+                scoreNumbers = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(0, 1))));
+                scoreNumbersUnits = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(1, 2))));
             }
         }
     }
@@ -146,10 +156,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.begin();
 
-        batch.draw(
-            background, 1 / PIXELS_PER_METER, 1 / PIXELS_PER_METER,
-            game.screenWidth / PIXELS_PER_METER, game.screenHeight / PIXELS_PER_METER
-        );
+        batch.draw(background, 1/PIXELS_PER_METER, 1/PIXELS_PER_METER, FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
 
         for (Pipe pipe : pipes)
             pipe.draw(batch);
@@ -158,15 +165,12 @@ public class GameScreen extends ScreenAdapter {
 
         player.draw(batch);
 
-        batch.draw(
-            region, game.screenWidth / 2f / PIXELS_PER_METER, 500 / PIXELS_PER_METER,
-            region.getRegionWidth() / PIXELS_PER_METER, region.getRegionHeight() / PIXELS_PER_METER
-        );
+        batch.draw(scoreNumbers, scoreBounds.x, scoreBounds.y, scoreBounds.width, scoreBounds.height);
 
         if (score > 9) {
             batch.draw(
-                region2, game.screenWidth + 15 / 2f / PIXELS_PER_METER, 500 / PIXELS_PER_METER,
-                region2.getRegionWidth() / PIXELS_PER_METER, region2.getRegionHeight() / PIXELS_PER_METER
+                scoreNumbersUnits, scoreBounds.x + 25 / PIXELS_PER_METER,
+                scoreBounds.y, scoreBounds.width, scoreBounds.height
             );
         }
 
@@ -188,5 +192,8 @@ public class GameScreen extends ScreenAdapter {
         world.dispose();
         batch.dispose();
         debugRenderer.dispose();
+
+        scoreNumbers.getTexture().dispose();
+        scoreNumbersUnits.getTexture().dispose();
     }
 }
