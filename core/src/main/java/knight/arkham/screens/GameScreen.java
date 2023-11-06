@@ -25,9 +25,9 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
     private final Texture background;
-    private final Texture floor;
     private final Player player;
     private final Array<Pipe> pipes;
+    private final Floor floor;
     private long lastPipeSpawnTime;
     private float accumulator;
     private final float TIME_STEP;
@@ -52,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
         pipes = new Array<>();
 
         background = new Texture("images/background-day.png");
-        floor = new Texture("images/base.png");
+        floor = new Floor(new Rectangle(game.screenWidth/2f, 40, game.screenWidth, 80), world);
     }
 
     @Override
@@ -130,10 +130,7 @@ public class GameScreen extends ScreenAdapter {
         for (Pipe pipe : pipes)
             pipe.draw(batch);
 
-        batch.draw(
-            floor, 1 / PIXELS_PER_METER, 1 / PIXELS_PER_METER,
-            game.screenWidth / PIXELS_PER_METER, 80 / PIXELS_PER_METER
-        );
+        floor.draw(batch);
 
         player.draw(batch);
 
@@ -144,7 +141,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-
         dispose();
     }
 
@@ -152,7 +148,7 @@ public class GameScreen extends ScreenAdapter {
     public void dispose() {
 
         player.dispose();
-
+        background.dispose();
         world.dispose();
         batch.dispose();
         debugRenderer.dispose();

@@ -11,6 +11,7 @@ import knight.arkham.helpers.Box2DHelper;
 
 public class Player extends GameObject {
     public static int score;
+    private boolean hasLost;
 
     public Player(Vector2 position, World world) {
         super(
@@ -30,11 +31,15 @@ public class Player extends GameObject {
 
     public void update() {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+        if (!hasLost && Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             applyLinealImpulse(new Vector2(0, 20));
     }
 
     private void applyLinealImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+    }
+
+    public void hasCollide(){
+        hasLost = true;
     }
 }

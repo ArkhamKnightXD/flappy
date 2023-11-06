@@ -1,8 +1,10 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
-
+import knight.arkham.objects.Floor;
+import knight.arkham.objects.Player;
 import static knight.arkham.helpers.Constants.*;
+import static knight.arkham.helpers.Constants.PLAYER_BIT;
 
 public class Box2DHelper {
 
@@ -16,6 +18,19 @@ public class Box2DHelper {
         fixtureDef.shape = shape;
 
         fixtureDef.density = box2DBody.density;
+
+        if (box2DBody.userData instanceof Player)
+            fixtureDef.filter.categoryBits = PLAYER_BIT;
+
+        else if (box2DBody.userData instanceof Floor) {
+
+            //Since I only define kinematic and dynamic and my box2DBody, I have to define static body here.
+            fixtureDef.filter.categoryBits = FLOOR_BIT;
+            box2DBody.bodyType = BodyDef.BodyType.StaticBody;
+        }
+
+        else
+            fixtureDef.filter.categoryBits = PIPE_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
