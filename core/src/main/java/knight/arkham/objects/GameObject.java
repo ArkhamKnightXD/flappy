@@ -44,6 +44,10 @@ public abstract class GameObject {
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
+    public void hasCollideWithThePlayer(){
+        actionSound.play();
+    }
+
     public void dispose() {
         sprite.dispose();
         actionSound.dispose();

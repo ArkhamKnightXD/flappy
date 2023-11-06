@@ -9,7 +9,7 @@ import knight.arkham.helpers.Box2DHelper;
 public class Floor extends GameObject {
 
     public Floor(Rectangle bounds, World world) {
-        super(bounds, world, "base.png", "laser.wav");
+        super(bounds, world, "base.png", "die.wav");
     }
 
     @Override

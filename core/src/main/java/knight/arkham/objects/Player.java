@@ -11,12 +11,12 @@ import knight.arkham.helpers.Box2DHelper;
 
 public class Player extends GameObject {
     public static int score;
-    private boolean hasLost;
+    private boolean isGameOver;
 
     public Player(Vector2 position, World world) {
         super(
             new Rectangle(position.x, position.y, 50, 40),
-            world, "yellowbird-midflap.png", "laser.wav"
+            world, "yellowbird-midflap.png", "wing.wav"
         );
 
         score = 0;
@@ -31,8 +31,11 @@ public class Player extends GameObject {
 
     public void update() {
 
-        if (!hasLost && Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+        if (!isGameOver && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+            actionSound.play();
             applyLinealImpulse(new Vector2(0, 20));
+        }
     }
 
     private void applyLinealImpulse(Vector2 impulseDirection) {
@@ -40,6 +43,6 @@ public class Player extends GameObject {
     }
 
     public void hasCollide(){
-        hasLost = true;
+        isGameOver = true;
     }
 }

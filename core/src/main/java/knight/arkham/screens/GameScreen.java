@@ -1,9 +1,13 @@
 package knight.arkham.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +32,9 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final Array<Pipe> pipes;
     private final Floor floor;
+    private final TextureAtlas atlas;
+    private TextureRegion region;
+    private int score;
     private long lastPipeSpawnTime;
     private float accumulator;
     private final float TIME_STEP;
@@ -53,6 +60,9 @@ public class GameScreen extends ScreenAdapter {
 
         background = new Texture("images/background-day.png");
         floor = new Floor(new Rectangle(game.screenWidth/2f, 40, game.screenWidth, 80), world);
+        atlas = new TextureAtlas("images/numbers.atlas");
+
+        region = atlas.findRegion(String.valueOf(score));
     }
 
     @Override
@@ -90,6 +100,13 @@ public class GameScreen extends ScreenAdapter {
                 pipesIterator.remove();
                 pipe.dispose();
             }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && score < 9) {
+
+            score++;
+
+            region = atlas.findRegion(String.valueOf(score));
         }
     }
 
@@ -133,6 +150,11 @@ public class GameScreen extends ScreenAdapter {
         floor.draw(batch);
 
         player.draw(batch);
+
+        batch.draw(
+            region, game.screenWidth / 2f / PIXELS_PER_METER, 500 / PIXELS_PER_METER,
+            region.getRegionWidth() / PIXELS_PER_METER, region.getRegionHeight() / PIXELS_PER_METER
+        );
 
         batch.end();
 

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Preferences;
 import knight.arkham.objects.Player;
 
 public class GameDataHelper {
-
     private static final String dataFilename = "space-invaders-data";
 
     public static void saveHighScore(){

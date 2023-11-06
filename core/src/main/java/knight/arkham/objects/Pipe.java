@@ -8,16 +8,13 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Pipe extends GameObject {
-    public static int score;
 
     public Pipe(Rectangle bounds, boolean isRotated, World world) {
         super(
             bounds,
             world, isRotated ? "pipe-green-180.png" :"pipe-green.png",
-            "laser.wav"
+            "die.wav"
         );
-
-        score = 0;
     }
 
     @Override

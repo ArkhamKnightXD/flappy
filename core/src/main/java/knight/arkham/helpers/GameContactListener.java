@@ -1,6 +1,7 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.physics.box2d.*;
+import knight.arkham.objects.GameObject;
 import knight.arkham.objects.Player;
 import static knight.arkham.helpers.Constants.*;
 
@@ -21,10 +22,12 @@ public class GameContactListener implements ContactListener {
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
                     ((Player) fixtureA.getUserData()).hasCollide();
+                    ((GameObject) fixtureB.getUserData()).hasCollideWithThePlayer();
                 }
 
                 else{
                     ((Player) fixtureB.getUserData()).hasCollide();
+                    ((GameObject) fixtureA.getUserData()).hasCollideWithThePlayer();
                 }
                 break;
         }
