@@ -44,10 +44,6 @@ public abstract class GameObject {
         batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
-    public Rectangle getBounds() {
-        return actualBounds;
-    }
-
     public void dispose() {
         sprite.dispose();
         actionSound.dispose();
