@@ -32,7 +32,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final Array<Pipe> pipes;
     private final Floor floor;
-    private final TextureAtlas atlas;
+    private final TextureAtlas numbersAtlas;
     private TextureRegion scoreNumbers;
     private TextureRegion scoreNumbersUnits;
     private final Rectangle scoreBounds;
@@ -64,10 +64,10 @@ public class GameScreen extends ScreenAdapter {
 
         background = new Texture("images/background-day.png");
 
-        atlas = new TextureAtlas("images/numbers.atlas");
+        numbersAtlas = new TextureAtlas("images/numbers.atlas");
 
-        scoreNumbers = atlas.findRegion(String.valueOf(score));
-        scoreNumbersUnits = atlas.findRegion(String.valueOf(score));
+        scoreNumbers = numbersAtlas.findRegion(String.valueOf(score));
+        scoreNumbersUnits = numbersAtlas.findRegion(String.valueOf(score));
 
         scoreBounds = new Rectangle(
             FULL_SCREEN_WIDTH / 2f, 500 / PIXELS_PER_METER,
@@ -118,11 +118,11 @@ public class GameScreen extends ScreenAdapter {
             score++;
 
             if (score < 10)
-                scoreNumbers = atlas.findRegion(String.valueOf(score));
+                scoreNumbers = numbersAtlas.findRegion(String.valueOf(score));
 
             else {
-                scoreNumbers = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(0, 1))));
-                scoreNumbersUnits = atlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(1, 2))));
+                scoreNumbers = numbersAtlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(0, 1))));
+                scoreNumbersUnits = numbersAtlas.findRegion(String.valueOf(Integer.parseInt(("" + score).substring(1, 2))));
             }
         }
     }
