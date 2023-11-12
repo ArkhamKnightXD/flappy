@@ -132,10 +132,12 @@ public class GameScreen extends ScreenAdapter {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
-        update();
         draw();
 
-        doPhysicsTimeStep(deltaTime);
+        if (!game.isGameOver) {
+            update();
+            doPhysicsTimeStep(deltaTime);
+        }
     }
 
     private void doPhysicsTimeStep(float deltaTime) {

@@ -17,6 +17,7 @@ public class Space extends Game {
     public int screenWidth;
     public int screenHeight;
     public AssetDescriptor<Skin> uiSkin;
+    public boolean isGameOver;
 
     public Space() {
 
