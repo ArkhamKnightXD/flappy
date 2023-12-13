@@ -1,7 +1,5 @@
 package knight.arkham.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
     private long lastPipeSpawnTime;
     private float accumulator;
     private final float TIME_STEP;
+    private float stateTimer;
 
     public GameScreen() {
 
@@ -113,7 +112,11 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        stateTimer += deltaTime;
+
+        if (stateTimer > 2) {
+
+            stateTimer = 0;
 
             score++;
 
@@ -178,7 +181,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override
