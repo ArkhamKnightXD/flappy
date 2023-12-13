@@ -22,18 +22,18 @@ public class GameContactListener implements ContactListener {
             case PLAYER_BIT | FLOOR_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT){
+
                     ((Player) fixtureA.getUserData()).hasCollide();
                     ((GameObject) fixtureB.getUserData()).hasCollideWithThePlayer();
-
-                    Space.INSTANCE.isGameOver = true;
                 }
 
                 else{
+
                     ((Player) fixtureB.getUserData()).hasCollide();
                     ((GameObject) fixtureA.getUserData()).hasCollideWithThePlayer();
-
-                    Space.INSTANCE.isGameOver = true;
                 }
+
+                Space.INSTANCE.isGameOver = true;
                 break;
         }
 

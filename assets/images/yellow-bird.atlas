@@ -1,9 +1,0 @@
-yellow-bird.png
-size:128,32
-repeat:none
-yellowbird-downflap
-bounds:38,2,34,24
-yellowbird-midflap
-bounds:74,2,34,24
-yellowbird-upflap
-bounds:2,2,34,24

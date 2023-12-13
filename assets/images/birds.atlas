@@ -1,0 +1,9 @@
+birds.png
+size:512,32
+repeat:none
+blue-bird
+bounds:106,2,102,24
+orange-bird
+bounds:2,2,102,24
+yellow-bird
+bounds:210,2,102,24

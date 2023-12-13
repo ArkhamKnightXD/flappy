@@ -94,9 +94,9 @@ public class GameScreen extends ScreenAdapter {
         lastPipeSpawnTime = TimeUtils.nanoTime();
     }
 
-    private void update() {
+    private void update(float deltaTime) {
 
-        player.update();
+        player.update(deltaTime);
 
         if(TimeUtils.nanoTime() - lastPipeSpawnTime > 2000000000)
             generatePipes();
@@ -135,7 +135,7 @@ public class GameScreen extends ScreenAdapter {
         draw();
 
         if (!game.isGameOver) {
-            update();
+            update(deltaTime);
             doPhysicsTimeStep(deltaTime);
         }
     }
