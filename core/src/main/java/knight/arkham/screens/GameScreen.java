@@ -1,5 +1,6 @@
 package knight.arkham.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
     private TextureRegion scoreNumbers;
     private TextureRegion scoreNumbersUnits;
     private final Rectangle scoreBounds;
+    private final Texture startGame;
     private int score;
     private long lastPipeSpawnTime;
     private float accumulator;
@@ -43,6 +45,8 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen() {
 
         game = Space.INSTANCE;
+
+        game.isGameOver = false;
 
         camera = game.camera;
 
@@ -62,6 +66,7 @@ public class GameScreen extends ScreenAdapter {
         floor = new Floor(new Rectangle(game.screenWidth/2f, 40, game.screenWidth, 80), world);
 
         background = new Texture("images/background-day.png");
+        startGame = new Texture("images/message.png");
 
         numbersAtlas = new TextureAtlas("images/numbers.atlas");
 
@@ -141,6 +146,8 @@ public class GameScreen extends ScreenAdapter {
             update(deltaTime);
             doPhysicsTimeStep(deltaTime);
         }
+        else if (Gdx.input.isTouched())
+            game.setScreen(new GameScreen());
     }
 
     private void doPhysicsTimeStep(float deltaTime) {
@@ -178,6 +185,9 @@ public class GameScreen extends ScreenAdapter {
                 scoreBounds.y, scoreBounds.width, scoreBounds.height
             );
         }
+
+        if (game.isGameOver)
+            batch.draw(startGame, 1/PIXELS_PER_METER, 1/PIXELS_PER_METER, FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
 
         batch.end();
 
