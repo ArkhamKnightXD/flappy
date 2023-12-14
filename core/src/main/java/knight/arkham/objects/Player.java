@@ -1,7 +1,6 @@
 package knight.arkham.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,7 +17,6 @@ public class Player extends GameObject {
     private boolean isGameOver;
     private float animationTimer;
     private final Animation<TextureRegion> flappingAnimation;
-
 
     public Player(Vector2 position, World world) {
         super(
@@ -60,7 +58,7 @@ public class Player extends GameObject {
 
         actualRegion = flappingAnimation.getKeyFrame(animationTimer, true);
 
-        if (!isGameOver && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (!isGameOver && Gdx.input.justTouched()) {
 
             actionSound.play();
             applyLinealImpulse(new Vector2(0, 20));
