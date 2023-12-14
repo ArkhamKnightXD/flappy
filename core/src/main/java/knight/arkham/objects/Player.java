@@ -24,8 +24,6 @@ public class Player extends GameObject {
             world, "yellowbird-midflap.png", "wing.wav"
         );
 
-        score = 0;
-
         TextureAtlas atlas = new TextureAtlas("images/birds.atlas");
 
         TextureRegion region = atlas.findRegion("yellow-bird");
