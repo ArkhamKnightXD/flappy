@@ -2,11 +2,13 @@ package knight.arkham.objects;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.AssetsHelper;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
@@ -28,7 +30,7 @@ public abstract class GameObject {
 
     protected abstract Body createBody();
 
-    private Rectangle getDrawBounds() {
+    protected Rectangle getDrawBounds() {
 
         return new Rectangle(
             body.getPosition().x - (actualBounds.width / 2 / PIXELS_PER_METER),
@@ -43,6 +45,16 @@ public abstract class GameObject {
         Rectangle drawBounds = getDrawBounds();
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+    }
+
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int regionWidth, int regionHeight) {
+
+        Array<TextureRegion> animationFrames = new Array<>();
+
+        for (int i = 0; i < 3; i++)
+            animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
+
+        return new Animation<>(0.1f, animationFrames);
     }
 
     public void hasCollideWithThePlayer(){

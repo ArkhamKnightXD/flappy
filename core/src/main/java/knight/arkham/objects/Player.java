@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
@@ -24,23 +23,11 @@ public class Player extends GameObject {
             world, "yellowbird-midflap.png", "wing.wav"
         );
 
-        TextureAtlas atlas = new TextureAtlas("images/birds.atlas");
-
-        TextureRegion region = atlas.findRegion("yellow-bird");
+        TextureRegion region = new TextureAtlas("images/birds.atlas").findRegion("yellow-bird");
 
         int regionWidth = region.getRegionWidth() / 3;
 
         flappingAnimation = makeAnimationByRegion(region, regionWidth, region.getRegionHeight());
-    }
-
-    private Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int regionWidth, int regionHeight) {
-
-        Array<TextureRegion> animationFrames = new Array<>();
-
-        for (int i = 0; i < 3; i++)
-            animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
-
-        return new Animation<>(0.1f, animationFrames);
     }
 
     @Override

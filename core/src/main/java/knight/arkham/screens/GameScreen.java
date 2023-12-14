@@ -117,6 +117,8 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
+        floor.update(deltaTime);
+
         stateTimer += deltaTime;
 
         if (stateTimer > 2) {
