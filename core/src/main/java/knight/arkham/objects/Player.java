@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import knight.arkham.Space;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
@@ -48,6 +49,9 @@ public class Player extends GameObject {
             actionSound.play();
             applyLinealImpulse(new Vector2(0, 20));
         }
+
+        if (getPixelPosition().y > 700)
+            Space.INSTANCE.isGameOver = true;
     }
 
     private void applyLinealImpulse(Vector2 impulseDirection) {

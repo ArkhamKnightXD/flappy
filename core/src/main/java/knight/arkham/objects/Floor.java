@@ -7,8 +7,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
-
 public class Floor extends GameObject {
 
     public Floor(Rectangle bounds, World world) {
@@ -32,9 +30,5 @@ public class Floor extends GameObject {
             Vector2 outScreenPosition = new Vector2(720, 40).scl(1/32f);
             body.setTransform(outScreenPosition, 0);
         }
-    }
-
-    private Vector2 getPixelPosition(){
-        return body.getPosition().scl(PIXELS_PER_METER);
     }
 }
