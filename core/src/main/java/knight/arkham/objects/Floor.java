@@ -24,7 +24,7 @@ public class Floor extends GameObject {
 
         body.setLinearVelocity(-4 , 0);
 
-//        To implement the parallax effect a move the body to the position
+//        The parallax effect implemented with two floors
         if (getPixelPosition().x < -230) {
 
             Vector2 outScreenPosition = new Vector2(720, 40).scl(1/32f);
