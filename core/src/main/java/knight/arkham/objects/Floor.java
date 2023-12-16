@@ -26,10 +26,11 @@ public class Floor extends GameObject {
 
         body.setLinearVelocity(-4 , 0);
 
-        if (getPixelPosition().x < -240) {
+//        To implement the parallax effect a move the body to the position
+        if (getPixelPosition().x < -230) {
 
-            Vector2 resetPosition = new Vector2(700, 40).scl(1/32f);
-            body.setTransform(resetPosition, 0);
+            Vector2 outScreenPosition = new Vector2(720, 40).scl(1/32f);
+            body.setTransform(outScreenPosition, 0);
         }
     }
 
