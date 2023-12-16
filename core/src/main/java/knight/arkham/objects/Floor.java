@@ -28,7 +28,7 @@ public class Floor extends GameObject {
 
         if (getPixelPosition().x < -240) {
 
-            Vector2 resetPosition = new Vector2(720, 40).scl(1/32f);
+            Vector2 resetPosition = new Vector2(700, 40).scl(1/32f);
             body.setTransform(resetPosition, 0);
         }
     }

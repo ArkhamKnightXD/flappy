@@ -197,7 +197,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override
