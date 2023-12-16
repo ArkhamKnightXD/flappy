@@ -1,27 +1,18 @@
 package knight.arkham.objects;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public class Floor extends GameObject {
-    private float animationTimer;
-    private final Animation<TextureRegion> animation;
 
     public Floor(Rectangle bounds, World world) {
         super(bounds, world, "base.png", "die.wav");
-
-        TextureRegion region = new TextureAtlas("images/floor.atlas").findRegion("floor");
-
-        //temporal parallax
-        int regionWidth = region.getRegionWidth() / 5;
-
-        animation = makeAnimationByRegion(region, regionWidth, region.getRegionHeight());
     }
 
     @Override
@@ -31,10 +22,18 @@ public class Floor extends GameObject {
         );
     }
 
-    public void update(float deltaTime) {
+    public void update() {
 
-        animationTimer += deltaTime;
+        body.setLinearVelocity(-4 , 0);
 
-        actualRegion = animation.getKeyFrame(animationTimer, true);
+        if (getPixelPosition().x < -240) {
+
+            Vector2 resetPosition = new Vector2(720, 40).scl(1/32f);
+            body.setTransform(resetPosition, 0);
+        }
+    }
+
+    private Vector2 getPixelPosition(){
+        return body.getPosition().scl(PIXELS_PER_METER);
     }
 }

@@ -31,6 +31,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final Array<Pipe> pipes;
     private final Floor floor;
+    private final Floor floor2;
     private final TextureAtlas numbersAtlas;
     private TextureRegion scoreNumbers;
     private TextureRegion scoreNumbersUnits;
@@ -64,6 +65,7 @@ public class GameScreen extends ScreenAdapter {
         pipes = new Array<>();
 
         floor = new Floor(new Rectangle(game.screenWidth/2f, 40, game.screenWidth, 80), world);
+        floor2 = new Floor(new Rectangle(game.screenWidth + 240, 40, game.screenWidth, 80), world);
 
         background = new Texture("images/background-day.png");
         startGame = new Texture("images/message.png");
@@ -117,7 +119,8 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        floor.update(deltaTime);
+        floor.update();
+        floor2.update();
 
         stateTimer += deltaTime;
 
@@ -176,6 +179,7 @@ public class GameScreen extends ScreenAdapter {
             pipe.draw(batch);
 
         floor.draw(batch);
+        floor2.draw(batch);
 
         player.draw(batch);
 
@@ -193,7 +197,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override

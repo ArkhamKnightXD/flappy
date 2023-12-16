@@ -22,12 +22,8 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Player)
             fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        else if (box2DBody.userData instanceof Floor) {
-
-            //Since I only define kinematic and dynamic and my box2DBody, I have to define static body here.
+        else if (box2DBody.userData instanceof Floor)
             fixtureDef.filter.categoryBits = FLOOR_BIT;
-            box2DBody.bodyType = BodyDef.BodyType.StaticBody;
-        }
 
         else
             fixtureDef.filter.categoryBits = PIPE_BIT;
