@@ -89,11 +89,13 @@ public class GameScreen extends ScreenAdapter {
 
     private void generatePipes() {
 
-        float upPipeHeight = MathUtils.random(256, game.screenHeight);
-        float downPipeHeight = game.screenHeight - upPipeHeight + 160;
+        float upPipePosition = MathUtils.random(480, game.screenHeight + 80);
 
-        Pipe upPipe = new Pipe(new Rectangle(game.screenWidth, game.screenHeight,64, upPipeHeight), true, world);
-        Pipe downPipe = new Pipe(new Rectangle(game.screenWidth, 80, 64, downPipeHeight), false, world);
+        //up pipe position less pipe height less gap size.
+        float downPipePosition = upPipePosition - 320 - 160;
+
+        Pipe upPipe = new Pipe(new Rectangle(game.screenWidth, upPipePosition, 64, 320), true, world);
+        Pipe downPipe = new Pipe(new Rectangle(game.screenWidth, downPipePosition, 64, 320), false, world);
 
         pipes.add(upPipe, downPipe);
 
