@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,7 +25,6 @@ public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     public SpriteBatch batch;
     private final World world;
-    private final Box2DDebugRenderer debugRenderer;
     private final Texture background;
     private final Player player;
     private final Array<Pipe> pipes;
@@ -57,8 +55,6 @@ public class GameScreen extends ScreenAdapter {
 
         world = new World(new Vector2(0, -20), true);
         world.setContactListener(new GameContactListener());
-
-        debugRenderer = new Box2DDebugRenderer();
 
         player = new Player(new Vector2(game.screenWidth/2f, game.screenHeight/2f), world);
 
@@ -198,8 +194,6 @@ public class GameScreen extends ScreenAdapter {
             batch.draw(startGame, 1/PIXELS_PER_METER, 1/PIXELS_PER_METER, FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
 
         batch.end();
-
-//        debugRenderer.render(world, camera.combined);
     }
 
     @Override
@@ -214,7 +208,6 @@ public class GameScreen extends ScreenAdapter {
         background.dispose();
         world.dispose();
         batch.dispose();
-        debugRenderer.dispose();
 
         scoreNumbers.getTexture().dispose();
         scoreNumbersUnits.getTexture().dispose();

@@ -14,7 +14,6 @@ import knight.arkham.helpers.Box2DHelper;
 
 public class Player extends GameObject {
     public static int score;
-    private boolean isGameOver;
     private float animationTimer;
     private final Animation<TextureRegion> flappingAnimation;
 
@@ -44,7 +43,7 @@ public class Player extends GameObject {
 
         actualRegion = flappingAnimation.getKeyFrame(animationTimer, true);
 
-        if (!isGameOver && Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched()) {
 
             actionSound.play();
             applyLinealImpulse(new Vector2(0, 20));
@@ -58,7 +57,7 @@ public class Player extends GameObject {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
-    public void hasCollide(){
-        isGameOver = true;
+    public void hasCollide() {
+        Space.INSTANCE.isGameOver = true;
     }
 }

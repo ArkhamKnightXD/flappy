@@ -10,7 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import knight.arkham.helpers.AssetsHelper;
+
+import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
@@ -24,7 +25,7 @@ public abstract class GameObject {
         actualBounds = bounds;
         actualWorld = world;
         actualRegion = new TextureRegion(new Texture("images/" + spritePath));
-        actionSound = AssetsHelper.loadSound(soundPath);
+        actionSound = loadSound(soundPath);
 
         body = createBody();
     }
