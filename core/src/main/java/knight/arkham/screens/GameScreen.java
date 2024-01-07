@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import knight.arkham.Space;
 import knight.arkham.helpers.GameContactListener;
+import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.objects.*;
 import java.util.Iterator;
 import static knight.arkham.helpers.Constants.*;
@@ -87,10 +88,10 @@ public class GameScreen extends ScreenAdapter {
 
         float upPipePosition = MathUtils.random(480, game.screenHeight + 80);
 
-        //up pipe position less pipe height less gap size.
-        float downPipePosition = upPipePosition - 320 - 160;
-
         Pipe upPipe = new Pipe(new Rectangle(game.screenWidth, upPipePosition, 64, 320), true, world);
+
+        float downPipePosition = upPipePosition - upPipe.actualBounds.height - 160;
+
         Pipe downPipe = new Pipe(new Rectangle(game.screenWidth, downPipePosition, 64, 320), false, world);
 
         pipes.add(upPipe, downPipe);
@@ -149,8 +150,10 @@ public class GameScreen extends ScreenAdapter {
             update(deltaTime);
             doPhysicsTimeStep(deltaTime);
         }
-        else if (Gdx.input.isTouched())
+        else if (Gdx.input.isTouched()) {
+            GameDataHelper.saveHighScore(score);
             game.setScreen(new GameScreen());
+        }
     }
 
     private void doPhysicsTimeStep(float deltaTime) {

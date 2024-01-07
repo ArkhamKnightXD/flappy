@@ -1,5 +1,6 @@
 package knight.arkham.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,11 +12,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
-import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
-    protected final Rectangle actualBounds;
+    public final Rectangle actualBounds;
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final Sound actionSound;
@@ -25,7 +25,7 @@ public abstract class GameObject {
         actualBounds = bounds;
         actualWorld = world;
         actualRegion = new TextureRegion(new Texture("images/" + spritePath));
-        actionSound = loadSound(soundPath);
+        actionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/"+ soundPath));
 
         body = createBody();
     }

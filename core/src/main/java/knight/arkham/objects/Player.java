@@ -13,7 +13,6 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Player extends GameObject {
-    public static int score;
     private float animationTimer;
     private final Animation<TextureRegion> flappingAnimation;
 

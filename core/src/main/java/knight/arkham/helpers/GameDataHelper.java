@@ -2,19 +2,18 @@ package knight.arkham.helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import knight.arkham.objects.Player;
 
 public class GameDataHelper {
-    private static final String dataFilename = "space-invaders-data";
+    private static final String dataFilename = "flappy";
 
-    public static void saveHighScore(){
+    public static void saveHighScore(int score){
 
         Preferences preferences = Gdx.app.getPreferences(dataFilename);
 
-        if (Player.score < loadHighScore())
+        if (score < loadHighScore())
             return;
 
-        preferences.putInteger("playerScore", Player.score);
+        preferences.putInteger("playerScore", score);
 
         preferences.flush();
     }
